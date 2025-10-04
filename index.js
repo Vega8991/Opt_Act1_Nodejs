@@ -15,3 +15,7 @@ console.log(chalk.blue('Fecha actual: ') + chalk.yellow(fechaActual));
 const alt = 37.38283;
 const lat = -5.97317;
 
+const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${alt}&current_weather=true`;
+
+fetch(apiUrl)
+    .then(response => response.json())
