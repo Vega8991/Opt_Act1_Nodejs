@@ -15,7 +15,23 @@ console.log(chalk.blue('Fecha actual: ') + chalk.yellow(fechaActual));
 const alt = 37.38283;
 const lat = -5.97317;
 
+// Constante que contiene la URL de la api de open-meteo
 const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${alt}&current_weather=true`;
 
+// Hace una peticion GET a la const apiUrl
 fetch(apiUrl)
-    .then(response => response.json())
+    // Promesa que recoge en 'respuesta' la petición GET y la convierte en un .JSON
+    .then(respuesta => respuesta.json())
+    // Promesa que recoge la info en datos
+    .then((datos)=> {
+        // guarda la info que hay en current_weather del JSON en la constante tiempo
+        const tiempo = datos.current_weather;
+        console.log(chalk.cyan(`Temperatura: ${chalk.magenta(tiempo.temperature)}`)) //Muestra la temperatura
+        console.log(chalk.cyan(`Velocidad del viento: ${chalk.magenta(tiempo.windspeed)}`)) //Muestra la vel del viento
+        console.log(chalk.cyan(`Coordenadas del viento: ${chalk.magenta(tiempo.winddirection)}`)) // Muestra las coordenadas a las q va el viento
+        })
+        // Captura algun error que pueda suceder
+    .catch(err => {
+        // Muestra el error de color rojo por pantalla
+        console.log(chalk.red('Error al obtener los datos del tiempo:', err));
+    });
